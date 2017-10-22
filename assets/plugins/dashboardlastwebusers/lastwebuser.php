@@ -88,11 +88,11 @@ while ($row = $modx->db->getRow($result))
 	 if ($EnablePhoto == yes)
 		{
         $thPhoto = '<th>' . $_lang['user_photo'] . '</th>';
-		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> <a href="index.php?a=88&id=' . $row['id'] . ' "></td><td><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> <a target="main" href="index.php?a=88&id=' . $row['id'] . ' "></td><td><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
 		}
 	  else
 		{
-		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td><a href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
 		}
 
 	if ($EnablePopup == yes)
@@ -103,12 +103,12 @@ while ($row = $modx->db->getRow($result))
 	if ($EnablePopup == no)
 		{
 		$LastUsersA.= '
-	<a href="index.php?a=88&id=' . $row['id'] . ' "><i class="fa fa-pencil-square-o"></i></a> ';
+	<a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><i class="fa fa-pencil-square-o"></i></a> ';
 		}
 
 	if ($showDeleteButton == yes)
 		{
-		$LastUsersA.= ' <a onclick="return confirm(\'' . $_lang['confirm_delete_user'] . '\')" href="index.php?a=90&id=' . $row['id'] . ' "><i class="fa fa-trash"></i></a> ';
+		$LastUsersA.= ' <a onclick="return confirm(\'' . $_lang['confirm_delete_user'] . '\')" target="main" href="index.php?a=90&id=' . $row['id'] . ' "><i class="fa fa-trash"></i></a> ';
 		}
 
 	$LastUsersA.= '<span class="user_overview"><a title="' . $_lang["overview"] . '" data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><i class="fa fa-info" aria-hidden="true"></i></a></span></td></tr>
