@@ -52,7 +52,7 @@ while ($row = $modx->db->getRow($result))
 	$getuserimage = $row['photo'];
 	if (empty($getuserimage))
 		{
-		$userimage = 'assets/plugins/welcomelastwebuser/user.png'; //default image if tv is empty
+		$userimage = 'assets/plugins/dashboardlastwebusers/user.png'; //default image if tv is empty
 		}
 	  else
 		{
@@ -88,7 +88,7 @@ while ($row = $modx->db->getRow($result))
 	 if ($EnablePhoto == yes)
 		{
         $thPhoto = '<th>' . $_lang['user_photo'] . '</th>';
-		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> <a target="main" href="index.php?a=88&id=' . $row['id'] . ' "></td><td><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
 		}
 	  else
 		{
@@ -112,7 +112,7 @@ while ($row = $modx->db->getRow($result))
 		}
 
 	$LastUsersA.= '<span class="user_overview"><a title="' . $_lang["overview"] . '" data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><i class="fa fa-info" aria-hidden="true"></i></a></span></td></tr>
-    <tr><td colspan="'.$colspan.'" class="hiddenRow"><div class="resource-overview-accordian collapse collapse-user' . $row['id'] . '"><div class="overview-body">
+    <tr class="resource-overview-accordian collapse collapse-user' . $row['id'] . '"><td colspan="'.$colspan.'" class="hiddenRow"><div class="overview-body text-small">
     <div class="col-sm-6">
     <ul class="list-group">
     <li>' . $_lang['user_email'] . ': <b>' . $row['email'] . '</b></li>
@@ -129,25 +129,12 @@ while ($row = $modx->db->getRow($result))
     <li>' . $_lang['user_zip'] . ': <b>' . $row['zip'] . '</b></li>
     </ul>
     </div>
+    </div>
     </td></tr>
     ';
 	}
 
 $WidgetOutput = '
-<style>  
-.table-webusers td.actions a {margin-left:3px;}
-  .img-user {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
- }
-
- .table-webusers > tbody > tr > td.text-right {
- text-align: right!important;
- }
-span.user_overview {margin-left:3px;}
-</style>
-
 	<table class="table data table-webusers"> 
       <thead>
       <tr>
@@ -167,6 +154,11 @@ span.user_overview {margin-left:3px;}
 $e = & $modx->Event;
 switch ($e->name)
 	{
+/*load styles with OnManagerMainFrameHeaderHTMLBlock*/
+case 'OnManagerMainFrameHeaderHTMLBlock':
+$cssOutput = '<link type="text/css" rel="stylesheet" href="../assets/plugins/dashboardlastwebusers/css/style.css">';
+$e->output($cssOutput.$jsOutput);
+break;
 case 'OnManagerWelcomeHome':
 	$widgets['DashboardWU'] = array(
 		'menuindex' => '' . $wdgposition . '',
@@ -174,7 +166,7 @@ case 'OnManagerWelcomeHome':
 		'cols' => 'col-md-' . $wdgsizex . '',
 		'icon' => '' . $wdgicon . '',
 		'title' => '' . $wdgTitle . ' ' . $button_pl_config . '',
-		'body' => '<div class="widget-stage"><div id ="DashboardList" class="table-responsive">
+		'body' => '<div class="widget-stage"><div id="DashboardUserList" class="table-responsive">
 				' . $WidgetOutput . ' </div></div>',
 		'hide' => '0'
 	);

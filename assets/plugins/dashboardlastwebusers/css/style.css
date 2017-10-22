@@ -1,0 +1,19 @@
+
+#DashboardUserList .table.data tbody tr:not(:hover) { background-color: #fff }
+#DashboardUserList .table.data tbody tr:nth-child(4n+1):not(:hover) { background-color: #f6f8f8 }
+#DashboardUserList .table.data tbody tr:nth-child(2n) { background-color: #fff }
+.btn-group .panel-setting:hover {
+  color: #444!important;
+  border:none;
+}
+.table-webusers td.actions a {margin-left:3px;}
+  .img-user {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+ }
+
+ .table-webusers > tbody > tr > td.text-right {
+ text-align: right!important;
+ }
+span.user_overview {margin-left:3px;}
