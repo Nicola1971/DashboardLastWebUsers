@@ -156,7 +156,13 @@ switch ($e->name)
 	{
 /*load styles with OnManagerMainFrameHeaderHTMLBlock*/
 case 'OnManagerMainFrameHeaderHTMLBlock':
+$manager_theme = $modx->config['manager_theme'];
+if($manager_theme == "EvoFLAT") {
+$cssOutput = '<link type="text/css" rel="stylesheet" href="../assets/plugins/dashboardlastwebusers/css/style_flat.css">';
+}
+else {
 $cssOutput = '<link type="text/css" rel="stylesheet" href="../assets/plugins/dashboardlastwebusers/css/style.css">';
+}
 $e->output($cssOutput.$jsOutput);
 break;
 case 'OnManagerWelcomeHome':

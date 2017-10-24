@@ -16,3 +16,7 @@
  text-align: right!important;
  }
 #DashboardUserList td.actions .fa {margin-left:6px;}
+
+.dark #DashboardUserList .table.data tbody tr:not(:hover) { background-color: #272c33}
+.dark #DashboardUserList .table.data tbody tr:nth-child(4n+1):not(:hover) { background-color: #383f48}
+.dark #DashboardUserList .table.data tbody tr:nth-child(2n) { background-color: #272c33}
