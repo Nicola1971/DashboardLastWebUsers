@@ -15,4 +15,5 @@
  .table-webusers > tbody > tr > td.text-right {
  text-align: right!important;
  }
-#DashboardUserList td.actions .fa {margin-left:6px;}
+#DashboardUserList td.actions i.fa {margin-left:6px;}
+#DashboardUserList td.actions i.fa.fa-info {margin-left:10px;}

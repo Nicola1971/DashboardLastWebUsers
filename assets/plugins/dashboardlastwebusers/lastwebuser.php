@@ -2,7 +2,7 @@
 /******
 dashboardlastwebusers  3.1.3 RC
 
-@properties &wdgVisibility=Show widget for:;menu;All,AdminOnly,AdminExcluded,ThisRoleOnly,ThisUserOnly;All &ThisRole=Show only to this role id:;string;;;enter the role id &ThisUser=Show only to this username:;string;;;enter the username  &wdgTitle= widget Title:;string;Last Webuser  &wdgicon= widget icon:;string;fa-users  &wdgposition=widget position:;list;1,2,3,4,5,6,7,8,9,10;1 &wdgsizex=widget x size:;list;12,6,4,3;12 &LastUsersLimit=How many users:;string;10 &EnablePopup= Enable popup icon:;list;no,yes;yes &EnablePhoto= Enable user photo:;list;no,yes;no &showDeleteButton= Show Delete Button:;list;yes,no;yes &WidgetID= Unique Widget ID:;string;LastWebUserBox
+@properties &wdgVisibility=Show widget for:;menu;All,AdminOnly,AdminExcluded,ThisRoleOnly,ThisUserOnly;All &ThisRole=Show only to this role id:;string;;;enter the role id &ThisUser=Show only to this username:;string;;;enter the username  &wdgTitle= Widget Title:;string;Last Webuser  &wdgicon= widget icon:;string;fa-users  &wdgposition=widget position:;list;1,2,3,4,5,6,7,8,9,10;1 &wdgsizex=widget x size:;list;12,6,4,3;12 &LastUsersLimit=How many users:;string;10 &EnablePopup= Enable popup icon:;list;no,yes;yes &EnablePhoto= Enable user photo:;list;no,yes;no &showDeleteButton= Show Delete Button:;list;yes,no;yes &WidgetID= Unique Widget ID:;string;LastWebUserBox &HeadBG= Widget Title Background color:;string; &HeadColor= Widget title color:;string;
 ****
 */
 if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
@@ -26,7 +26,7 @@ global $modx,$_lang;
 $result = $modx->db->select('id', $this->getFullTableName("site_plugins"), "name='{$modx->event->activePlugin}' AND disabled=0");
 $pluginid = $modx->db->getValue($result);
 if($modx->hasPermission('edit_plugin')) {
-$button_pl_config = '<a data-toggle="tooltip" href="javascript:;" title="' . $_lang["settings_config"] . '" class="text-muted pull-right" onclick="parent.modx.popup({url:\''. MODX_MANAGER_URL.'?a=102&id='.$pluginid.'&tab=1\',title1:\'' . $_lang["settings_config"] . '\',icon:\'fa-cog\',iframe:\'iframe\',selector2:\'#tabConfig\',position:\'center center\',width:\'80%\',height:\'80%\',wrap:\'evo-tab-page-home\',hide:0,hover:0,overlay:1,overlayclose:1})" ><i class="fa fa-cog"></i> </a>';
+$button_pl_config = '<a data-toggle="tooltip" href="javascript:;" title="' . $_lang["settings_config"] . '" class="text-muted pull-right" onclick="parent.modx.popup({url:\''. MODX_MANAGER_URL.'?a=102&id='.$pluginid.'&tab=1\',title1:\'' . $_lang["settings_config"] . '\',icon:\'fa-cog\',iframe:\'iframe\',selector2:\'#tabConfig\',position:\'center center\',width:\'80%\',height:\'80%\',wrap:\'evo-tab-page-home\',hide:0,hover:0,overlay:1,overlayclose:1})" ><i class="fa fa-cog" style="color:'.$HeadColor.';"></i> </a>';
 }
 $modx->setPlaceholder('button_pl_config', $button_pl_config);
 
@@ -170,6 +170,8 @@ case 'OnManagerWelcomeHome':
 		'menuindex' => '' . $wdgposition . '',
 		'id' => 'DashboardWU' . $pluginid . '',
 		'cols' => 'col-md-' . $wdgsizex . '',
+        'headAttr' => 'style="background-color:'.$HeadBG.'; color:'.$HeadColor.';"',
+		'bodyAttr' => '',
 		'icon' => '' . $wdgicon . '',
 		'title' => '' . $wdgTitle . ' ' . $button_pl_config . '',
 		'body' => '<div class="widget-stage"><div id="DashboardUserList" class="table-responsive">
