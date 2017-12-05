@@ -1,6 +1,6 @@
 <?php
 /******
-dashboardlastwebusers  3.2.1 RC
+dashboardlastwebusers  3.2.2 RC
 
 @properties &wdgVisibility=Show widget for:;menu;All,AdminOnly,AdminExcluded,ThisRoleOnly,ThisUserOnly;All &ThisRole=Show only to this role id:;string;;;enter the role id &ThisUser=Show only to this username:;string;;;enter the username  &wdgTitle= Widget Title:;string;Last Webuser  &wdgicon= widget icon:;string;fa-users  &wdgposition=widget position:;list;1,2,3,4,5,6,7,8,9,10;1 &wdgsizex=widget x size:;list;12,6,4,3;12 &LastUsersLimit=How many users:;string;10 &EnablePopup= Enable popup icon:;list;no,yes;yes &EnablePhoto= Enable user photo:;list;no,yes;no &showDeleteButton= Show Delete Button:;list;yes,no;yes &WidgetID= Unique Widget ID:;string;LastWebUserBox &HeadBG= Widget Title Background color:;string; &HeadColor= Widget title color:;string;
 ****
@@ -26,7 +26,7 @@ global $modx,$_lang;
 $result = $modx->db->select('id', $this->getFullTableName("site_plugins"), "name='{$modx->event->activePlugin}' AND disabled=0");
 $pluginid = $modx->db->getValue($result);
 if($modx->hasPermission('edit_plugin')) {
-$button_pl_config = '<a data-toggle="tooltip" href="javascript:;" title="' . $_lang["settings_config"] . '" class="text-muted pull-right" onclick="parent.modx.popup({url:\''. MODX_MANAGER_URL.'?a=102&id='.$pluginid.'&tab=1\',title1:\'' . $_lang["settings_config"] . '\',icon:\'fa-cog\',iframe:\'iframe\',selector2:\'#tabConfig\',position:\'center center\',width:\'80%\',height:\'80%\',wrap:\'evo-tab-page-home\',hide:0,hover:0,overlay:1,overlayclose:1})" ><i class="fa fa-cog" style="color:'.$HeadColor.';"></i> </a>';
+$button_pl_config = '<a data-toggle="tooltip" href="javascript:;" title="' . $_lang["settings_config"] . '" class="text-muted pull-right" onclick="parent.modx.popup({url:\''. MODX_MANAGER_URL.'?a=102&id='.$pluginid.'&tab=1\',title1:\'' . $_lang["settings_config"] . '\',icon:\'fa-cog\',iframe:\'iframe\',selector2:\'#tabConfig\',position:\'center center\',width:\'80%\',height:\'80%\',hide:0,hover:0,overlay:1,overlayclose:1})" ><i class="fa fa-cog" style="color:'.$HeadColor.';"></i> </a>';
 }
 $modx->setPlaceholder('button_pl_config', $button_pl_config);
 
@@ -88,11 +88,11 @@ while ($row = $modx->db->getRow($result))
 	 if ($EnablePhoto == yes)
 		{
         $thPhoto = '<th>' . $_lang['user_photo'] . '</th>';
-		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
 		}
 	  else
 		{
-		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td>' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
 		}
 
 	if ($EnablePopup == yes)
