@@ -37,8 +37,16 @@ $WidgetOutput = isset($WidgetOutput) ? $WidgetOutput : '';
 // popup
 $EnablePopup = isset($EnablePopup) ? $EnablePopup : 'no';
 //events
-$webuserstable = $modx->getFullTableName('web_users');
-$webuserattribstable = $modx->getFullTableName('web_user_attributes');
+// Added to allow for working with v1, v2 and v3
+if ( intval(substr($modx->config['settings_version'],0,1)) < 3 )
+{
+	$webuserstable = $modx->getFullTableName('web_users');
+	$webuserattribstable = $modx->getFullTableName('web_user_attributes');
+} else {
+	$webuserstable = $modx->getFullTableName('users');
+	$webuserattribstable = $modx->getFullTableName('user_attributes');
+}
+
 $e = &$modx->Event;
 $output ='';
 	$result = $modx->db->query( 'SELECT '.$webuserattribstable.'.id, '.$webuserstable.'.id, '.$webuserattribstable.'.fullname, '.$webuserattribstable.'.email, '.$webuserattribstable.'.photo, '.$webuserattribstable.'.mobilephone, '.$webuserattribstable.'.phone,  '.$webuserattribstable.'.gender, '.$webuserattribstable.'.country, '.$webuserattribstable.'.street, '.$webuserattribstable.'.city, '.$webuserattribstable.'.state, '.$webuserattribstable.'.zip, '.$webuserstable.'.username FROM '.$webuserattribstable.' 
@@ -78,14 +86,14 @@ while ($row = $modx->db->getRow($result))
 		{
 		$usergender = $getusergender;
 		}
- if ($EnablePhoto == yes)
+ if ($EnablePhoto == 'yes')
 		{
         $colspan = '6';
         }
         else {
         $colspan = '5';
         }
-	 if ($EnablePhoto == yes)
+	 if ($EnablePhoto == 'yes')
 		{
         $thPhoto = '<th>' . $_lang['user_photo'] . '</th>';
 		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
@@ -95,18 +103,18 @@ while ($row = $modx->db->getRow($result))
 		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
 		}
 
-	if ($EnablePopup == yes)
+	if ($EnablePopup == 'yes')
 		{
 		$LastUsersA.= '<a onclick="window.open(\'index.php?a=88&id=' . $row['id'] . '\',\'WebUser\',\'width=800,height=600,top=\'+((screen.height-600)/2)+\',left=\'+((screen.width-800)/2)+\',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no\')" style="cursor: pointer;"> <i class="fa fa-external-link"></i> </a> ';
 		}
 
-	if ($EnablePopup == no)
+	if ($EnablePopup == 'no')
 		{
 		$LastUsersA.= '
 	<a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><i class="fa fa-pencil-square-o"></i></a> ';
 		}
 
-	if ($showDeleteButton == yes)
+	if ($showDeleteButton == 'yes')
 		{
 		$LastUsersA.= ' <a onclick="return confirm(\'' . $_lang['confirm_delete_user'] . '\')" target="main" href="index.php?a=90&id=' . $row['id'] . ' "><i class="fa fa-trash"></i></a> ';
 		}
