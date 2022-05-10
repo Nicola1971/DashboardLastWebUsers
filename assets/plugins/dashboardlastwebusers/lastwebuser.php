@@ -7,6 +7,14 @@ dashboardlastwebusers  3.2.2 RC
 */
 if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
 // get manager role
+// Added for php v8.0
+$HeadColor = '';
+$HeadBG = '';
+$thPhoto = '';
+$LastUsersA = '';
+$ThisUser = '';
+$ThisRole = '';
+
 $internalKey = $modx->getLoginUserID();
 $sid = $modx->sid;
 $role = $_SESSION['mgrRole'];
@@ -119,7 +127,7 @@ while ($row = $modx->db->getRow($result))
 		$LastUsersA.= ' <a onclick="return confirm(\'' . $_lang['confirm_delete_user'] . '\')" target="main" href="index.php?a=90&id=' . $row['id'] . ' "><i class="fa fa-trash"></i></a> ';
 		}
 
-	$LastUsersA.= '<span class="user_overview"><a title="' . $_lang["overview"] . '" data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><i class="fa fa-info" aria-hidden="true"></i></a></span></td></tr>
+	$LastUsersA.= '<span class="user_overview"><a title="" data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><i class="fa fa-info" aria-hidden="true"></i></a></span></td></tr>
     <tr class="resource-overview-accordian collapse collapse-user' . $row['id'] . '"><td colspan="'.$colspan.'" class="hiddenRow"><div class="overview-body text-small">
     <div class="col-sm-6">
     <ul class="list-group">
