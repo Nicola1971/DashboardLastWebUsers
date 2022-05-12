@@ -14,6 +14,7 @@ $thPhoto = '';
 $LastUsersA = '';
 $ThisUser = '';
 $ThisRole = '';
+$jsOutput = '';
 
 $internalKey = $modx->getLoginUserID();
 $sid = $modx->sid;
