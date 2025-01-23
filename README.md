@@ -1,4 +1,4 @@
 # DashboardLastWebUsers
  Last registered webusers widget for Evolution CMS 1.4x, 2x, 3x
 
-![lastwebuser](https://github.com/user-attachments/assets/599d4def-3c81-4e16-af06-bed54a4bfd4a)
+![lastwebuser](https://github.com/user-attachments/assets/811e03c5-c89c-4b81-814f-d631f0dcf7fb)
