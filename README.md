@@ -1,4 +1,6 @@
 # DashboardLastWebUsers
- Last registered webusers widget for Evo 1.4
- 
- ![download](https://user-images.githubusercontent.com/7342798/32340827-f796b774-bffb-11e7-893b-595904ad09a4.png)
+ Last registered webusers widget for Evolution CMS 1.4x, 2x, 3x
+
+![lastwebuser](https://github.com/user-attachments/assets/811e03c5-c89c-4b81-814f-d631f0dcf7fb)
+
+**more info and instructions**: https://www.tattoocms.it/extras/dashboard-widgets/dashboardlastwebusers.html
