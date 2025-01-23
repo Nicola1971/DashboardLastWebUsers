@@ -1,11 +1,19 @@
 <?php
 /******
-dashboardlastwebusers  3.2.2 RC
+dashboardlastwebusers  3.2.4
 
-@properties &wdgVisibility=Show widget for:;menu;All,AdminOnly,AdminExcluded,ThisRoleOnly,ThisUserOnly;All &ThisRole=Show only to this role id:;string;;;enter the role id &ThisUser=Show only to this username:;string;;;enter the username  &wdgTitle= Widget Title:;string;Last Webuser  &wdgicon= widget icon:;string;fa-users  &wdgposition=widget position:;list;1,2,3,4,5,6,7,8,9,10;1 &wdgsizex=widget x size:;list;12,6,4,3;12 &LastUsersLimit=How many users:;string;10 &EnablePopup= Enable popup icon:;list;no,yes;yes &EnablePhoto= Enable user photo:;list;no,yes;no &showDeleteButton= Show Delete Button:;list;yes,no;yes &WidgetID= Unique Widget ID:;string;LastWebUserBox &HeadBG= Widget Title Background color:;string; &HeadColor= Widget title color:;string;
-****
 */
 if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
+$ThisRole = isset($ThisRole) ? $ThisRole : '';
+$ThisUser = isset($ThisUser) ? $ThisUser : '';
+$HeadColor = isset($HeadColor) ? $HeadColor : '';
+$HeadBG = isset($HeadBG) ? $HeadBG : '';
+$LastUsersA = isset($LastUsersA) ? $LastUsersA : '';
+
+$thPhoto = isset($thPhoto) ? $thPhoto : '';
+$jsOutput = isset($jsOutput) ? $jsOutput : '';
+$DateFormat = isset($DateFormat) ? $DateFormat : 'd-m-Y H:i:s';
+$_lang["overview"] = isset($_lang["overview"]) ? $_lang["overview"] : '';
 // get manager role
 $internalKey = $modx->getLoginUserID();
 $sid = $modx->sid;
@@ -26,7 +34,7 @@ global $modx,$_lang;
 $result = $modx->db->select('id', $this->getFullTableName("site_plugins"), "name='{$modx->event->activePlugin}' AND disabled=0");
 $pluginid = $modx->db->getValue($result);
 if($modx->hasPermission('edit_plugin')) {
-$button_pl_config = '<a data-toggle="tooltip" href="javascript:;" title="' . $_lang["settings_config"] . '" class="text-muted pull-right" onclick="parent.modx.popup({url:\''. MODX_MANAGER_URL.'?a=102&id='.$pluginid.'&tab=1\',title1:\'' . $_lang["settings_config"] . '\',icon:\'fa-cog\',iframe:\'iframe\',selector2:\'#tabConfig\',position:\'center center\',width:\'80%\',height:\'80%\',hide:0,hover:0,overlay:1,overlayclose:1})" ><i class="fa fa-cog" style="color:'.$HeadColor.';"></i> </a>';
+$button_pl_config = '<a data-toggle="tooltip" href="javascript:;" title="' . $_lang["settings_config"] . '" class="text-muted pull-right float-right" onclick="parent.modx.popup({url:\''. MODX_MANAGER_URL.'?a=102&id='.$pluginid.'&tab=1\',title1:\'' . $_lang["settings_config"] . '\',icon:\'fa-cog\',iframe:\'iframe\',selector2:\'#tabConfig\',position:\'center center\',width:\'80%\',height:\'80%\',hide:0,hover:0,overlay:1,overlayclose:1})" ><i class="fa fa-cog" style="color:'.$HeadColor.';"></i> </a>';
 }
 $modx->setPlaceholder('button_pl_config', $button_pl_config);
 
@@ -36,6 +44,7 @@ $WidgetID = isset($WidgetID) ? $WidgetID : 'LastWebUserBox';
 $WidgetOutput = isset($WidgetOutput) ? $WidgetOutput : '';
 // popup
 $EnablePopup = isset($EnablePopup) ? $EnablePopup : 'no';
+
 //events
 // Added to allow for working with v1, v2 and v3
 if ( intval(substr($modx->config['settings_version'],0,1)) < 3 )
@@ -49,7 +58,7 @@ if ( intval(substr($modx->config['settings_version'],0,1)) < 3 )
 
 $e = &$modx->Event;
 $output ='';
-	$result = $modx->db->query( 'SELECT '.$webuserattribstable.'.id, '.$webuserstable.'.id, '.$webuserattribstable.'.fullname, '.$webuserattribstable.'.email, '.$webuserattribstable.'.photo, '.$webuserattribstable.'.mobilephone, '.$webuserattribstable.'.phone,  '.$webuserattribstable.'.gender, '.$webuserattribstable.'.country, '.$webuserattribstable.'.street, '.$webuserattribstable.'.city, '.$webuserattribstable.'.state, '.$webuserattribstable.'.zip, '.$webuserstable.'.username FROM '.$webuserattribstable.' 
+	$result = $modx->db->query( 'SELECT '.$webuserattribstable.'.id, '.$webuserstable.'.id, '.$webuserattribstable.'.fullname, '.$webuserattribstable.'.email, '.$webuserattribstable.'.photo, '.$webuserattribstable.'.mobilephone, '.$webuserattribstable.'.phone,  '.$webuserattribstable.'.gender, '.$webuserattribstable.'.country, '.$webuserattribstable.'.street, '.$webuserattribstable.'.city, '.$webuserattribstable.'.state, '.$webuserattribstable.'.zip, '.$webuserattribstable.'.createdon, '.$webuserstable.'.username FROM '.$webuserattribstable.' 
     INNER JOIN '.$webuserstable.'
     ON '.$webuserattribstable.'.internalKey='.$webuserstable.'.id
     ORDER BY '.$webuserattribstable.'.id DESC LIMIT '.$LastUsersLimit.' ' );
@@ -88,19 +97,19 @@ while ($row = $modx->db->getRow($result))
 		}
  if ($EnablePhoto == 'yes')
 		{
-        $colspan = '6';
+        $colspan = '7';
         }
         else {
-        $colspan = '5';
+        $colspan = '6';
         }
 	 if ($EnablePhoto == 'yes')
 		{
         $thPhoto = '<th>' . $_lang['user_photo'] . '</th>';
-		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<tr><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><img src="../' . $userimage . '" class="img-responsive img-user" height="60" width="60"> </td><td><span class="label label-info">' . $row['id'] . '</span> </td><td><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td>' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . date($DateFormat, $row['createdon']) . '</td><td style="text-align: right;" class="actions">';
 		}
 	  else
 		{
-		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td style="text-align: right;" class="actions">';
+		$LastUsersA.= '<td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '" width="5%"><span class="label label-info">' . $row['id'] . '</span> </td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><a target="main" href="index.php?a=88&id=' . $row['id'] . ' "><b>' . $row['username'] . '</b></a></td>  <td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['fullname'] . '</td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . $row['email'] . '  </td><td data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '">' . date($DateFormat, $row['createdon']) . '</td><td style="text-align: right;" class="actions">';
 		}
 
 	if ($EnablePopup == 'yes')
@@ -119,7 +128,7 @@ while ($row = $modx->db->getRow($result))
 		$LastUsersA.= ' <a onclick="return confirm(\'' . $_lang['confirm_delete_user'] . '\')" target="main" href="index.php?a=90&id=' . $row['id'] . ' "><i class="fa fa-trash"></i></a> ';
 		}
 
-	$LastUsersA.= '<span class="user_overview"><a title="' . $_lang["overview"] . '" data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><i class="fa fa-info" aria-hidden="true"></i></a></span></td></tr>
+	$LastUsersA.= '<span class="user_overview"><a title="overview" data-toggle="collapse" data-target=".collapse-user' . $row['id'] . '"><i class="fa fa-info" aria-hidden="true"></i></a></span></td></tr>
     <tr class="resource-overview-accordian collapse collapse-user' . $row['id'] . '"><td colspan="'.$colspan.'" class="hiddenRow"><div class="overview-body text-small">
     <div class="col-sm-6">
     <ul class="list-group">
@@ -151,6 +160,7 @@ $WidgetOutput = '
         <th>' . $_lang['name'] . '</th>
         <th>' . $_lang['user_full_name'] . '</th>
         <th>' . $_lang['user_email'] . '</th>
+		<th>' . $_lang['date'] . '</th>
         <th style="width: 1%; text-align: center">[%mgrlog_action%]</th>
       </tr>
     </thead><tbody>' . $LastUsersA . '</tbody></table>
