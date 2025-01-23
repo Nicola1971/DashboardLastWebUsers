@@ -9,7 +9,6 @@ $ThisUser = isset($ThisUser) ? $ThisUser : '';
 $HeadColor = isset($HeadColor) ? $HeadColor : '';
 $HeadBG = isset($HeadBG) ? $HeadBG : '';
 $LastUsersA = isset($LastUsersA) ? $LastUsersA : '';
-
 $thPhoto = isset($thPhoto) ? $thPhoto : '';
 $jsOutput = isset($jsOutput) ? $jsOutput : '';
 $DateFormat = isset($DateFormat) ? $DateFormat : 'd-m-Y H:i:s';
