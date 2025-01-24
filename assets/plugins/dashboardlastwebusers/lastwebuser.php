@@ -94,12 +94,18 @@ while ($row = $modx->db->getRow($result)) {
         'assets/plugins/dashboardlastwebusers/user.png';
 
     // Gender translation
-    $usergender = match((int)$row['gender']) {
-        0 => $_lang['user_other'],
-        1 => $_lang['user_male'],
-        2 => $_lang['user_female'],
-        default => $row['gender']
-    };
+	$usergender = $row['gender'];
+	switch((int)$row['gender']) {
+		case 0:
+			$usergender = $_lang['user_other'];
+			break;
+		case 1:
+			$usergender = $_lang['user_male'];
+			break;
+		case 2:
+			$usergender = $_lang['user_female'];
+			break;
+	}
         
     $colspan = $EnablePhoto == 'yes' ? '7' : '6';
     
