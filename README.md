@@ -1,6 +1,7 @@
 # DashboardLastWebUsers
- Last registered webusers widget for Evolution CMS 1.4x, 2x, 3x
+ Last registered users widget for Evolution CMS 1.4x, 2x, 3x
 
-![lastwebuser](https://github.com/user-attachments/assets/811e03c5-c89c-4b81-814f-d631f0dcf7fb)
+![lastwebuser-widget](https://github.com/user-attachments/assets/ce5822ad-da54-43dc-a2ad-9da9e6c85093)
+
 
 **more info and instructions**: https://www.tattoocms.it/extras/dashboard-widgets/dashboardlastwebusers.html
